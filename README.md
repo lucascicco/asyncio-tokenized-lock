@@ -1,5 +1,6 @@
 # asyncio_tokenized_lock
 
+[![codecov](https://codecov.io/gh/lucascicco/asyncio-tokenized-lock/graph/badge.svg?token=8F2RYP2L2L)](https://codecov.io/gh/lucascicco/asyncio-tokenized-lock)
 [![PyPI](https://img.shields.io/pypi/v/asyncio-tokenized-lock)](https://pypi.org/project/asyncio-tokenized-lock/)
 [![Downloads](https://pepy.tech/badge/asyncio-tokenized-lock)](https://pepy.tech/project/asyncio-tokenized-lock)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/asyncio-tokenized-lock)
