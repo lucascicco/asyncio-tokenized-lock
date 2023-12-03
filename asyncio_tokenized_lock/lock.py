@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Generic, Optional, TypeVar
 from weakref import WeakValueDictionary
 
-__all__ = ["LockManager"]
+__all__ = ["LockManager", "TokenizedLock"]
 
 T = TypeVar("T", str, int, tuple)
 
@@ -59,7 +59,7 @@ class LockManager(Generic[T]):
             self._tokens.pop(token)
 
 
-@dataclass()
+@dataclass
 class TokenizedLock(Generic[T]):
     """Represents a lock associated with a token."""
 
