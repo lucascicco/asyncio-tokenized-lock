@@ -1,0 +1,18 @@
+[run]
+source = asyncio_tokenized_lock
+omit = .venv/**,examples/**
+
+[report]
+precision = 2
+exclude_lines =
+    pragma: nocover
+    pragma:nocover
+    pragma: no cover
+    pragma:no cover
+    if TYPE_CHECKING:
+    @overload
+    @abstractmethod
+    @abc.abstractmethod
+    assert_never
+omit =
+    */tests/*
