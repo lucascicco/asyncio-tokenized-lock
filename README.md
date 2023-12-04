@@ -2,7 +2,6 @@
 
 [![codecov](https://codecov.io/gh/lucascicco/asyncio-tokenized-lock/graph/badge.svg?token=8F2RYP2L2L)](https://codecov.io/gh/lucascicco/asyncio-tokenized-lock)
 [![PyPI](https://img.shields.io/pypi/v/asyncio-tokenized-lock)](https://pypi.org/project/asyncio-tokenized-lock/)
-[![Downloads](https://pepy.tech/badge/asyncio-tokenized-lock)](https://pepy.tech/project/asyncio-tokenized-lock)
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/asyncio-tokenized-lock)
 
 Asyncio Tokenized Lock is a Python library that provides a token-based locking mechanism for managing asynchronous locks in an asyncio environment. It introduces two main classes, `LockManager` and `TokenizedLock`, to facilitate the coordination of asynchronous tasks with associated tokens.
