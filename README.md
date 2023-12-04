@@ -31,7 +31,7 @@ lock = manager.register("example_token")
 
 # Acquire and release the lock
 async with lock:
-    # Perform asynchronous operations while holding the lock
+    # Perform operations while holding the lock
     pass
 ```
 
@@ -49,7 +49,7 @@ lock.ctx_timeout = 1.0  # Set the timeout to 1 second
 try:
     # Acquire the lock with a timeout using context manager
     async with lock:
-        # Perform asynchronous operations while holding the lock
+        # Perform operations while holding the lock
         pass
 except asyncio.TimeoutError:
     ...
@@ -60,7 +60,7 @@ except asyncio.TimeoutError:
 ```python
 try:
     await lock.acquire(timeout=1.0)
-    # Perform asynchronous operations while holding the lock
+    # Perform operations while holding the lock
 except asyncio.TimeoutError:
     print("Lock acquisition timed out")
 ```
