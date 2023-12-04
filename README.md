@@ -70,7 +70,10 @@ except asyncio.TimeoutError:
 ```python
 import asyncio
 import uuid
+import logging
 from asyncio_tokenized_lock.lock import LockManager, TokenizedLock
+
+log = logging.getLogger("my-module")
 
 async def consume_queue_safely(concurrency: int = 5, queue_size: int = 100):
     manager = LockManager[str]()
@@ -89,7 +92,7 @@ async def consume_queue_safely(concurrency: int = 5, queue_size: int = 100):
                 continue
 
             async with lock:
-                # Perform asynchronous operations with the locked item
+                # Perform operations with the locked item
                 yield item
 
     # Worker class to consume from the queue safely
@@ -100,8 +103,9 @@ async def consume_queue_safely(concurrency: int = 5, queue_size: int = 100):
 
         async def consume(self):
             while True:
-                async for _ in safe_consume(self.queue):
-                    await asyncio.sleep(0.1)
+                async for item in safe_consume(self.queue):
+                    # Perform operations with the item
+                    log.info(f"[WORKER-{self.id}] Item {item} processed")
                 break
 
     workers = [Worker(id=str(i), queue=queue) for i in range(concurrency)]
