@@ -127,7 +127,7 @@ class TokenizedLock(Generic[T]):
             return
         self._release()
 
-    async def acquire(self, timeout: Optional[float] = None) -> bool:
+    async def acquire(self, *, timeout: Optional[float] = None) -> bool:
         """Acquires the TokenizedLock instance asynchronously.
 
         Parameters
@@ -160,4 +160,4 @@ class TokenizedLock(Generic[T]):
 
     async def __aexit__(self, exc_type, exc_val, exc_tb) -> None:
         """Asynchronous context manager exit."""
-        self.release()
+        self.release(safe=True)
