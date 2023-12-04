@@ -65,9 +65,12 @@ class TokenizedLock(Generic[T]):
 
     token: T
     manager: LockManager
-    _ctx_timeout: Optional[float] = None
-    _released: bool = False
-    _iolock: asyncio.Lock = field(init=False)
+    _ctx_timeout: Optional[float] = field(default=None, init=False)
+    _released: bool = field(default=False, init=False)
+    _iolock: asyncio.Lock = field(
+        default_factory=asyncio.Lock,
+        init=False,
+    )
 
     def __repr__(self) -> str:
         extra = "locked" if self.locked else "unlocked"
@@ -75,9 +78,6 @@ class TokenizedLock(Generic[T]):
         if waiters:
             extra = f"{extra}, waiters:{len(waiters)}"
         return f"<TokenizedLock {self.token!r} {extra}>"
-
-    def __post_init__(self) -> None:
-        self._iolock = asyncio.Lock()
 
     @property
     def ctx_timeout(self) -> Optional[float]:
