@@ -49,7 +49,7 @@ async def consume_queue_safely(
     await asyncio.wait(consume_tasks)
 
     assert sum(acquire_counter.values()) == queue_size
-    assert len(manager._tokens) == 0
+    assert len(manager._locks_by_token) == 0
 
 
 @pytest.mark.asyncio()
@@ -139,12 +139,12 @@ async def test_lock_manager_len():
     f_lock = manager.register(1)
     s_lock = manager.register(2)
     assert len(manager) == 2
-    assert len(manager._tokens) == 2
+    assert len(manager._locks_by_token) == 2
     await f_lock.acquire()
     await s_lock.acquire()
     manager.release_all()
     assert len(manager) == 0
-    assert len(manager._tokens) == 0
+    assert len(manager._locks_by_token) == 0
 
 
 @pytest.mark.asyncio()

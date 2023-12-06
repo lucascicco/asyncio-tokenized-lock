@@ -12,18 +12,19 @@ T = TypeVar("T", str, int, tuple)
 class LockManager(Generic[T]):
     """Manages TokenizedLock instances using tokens."""
 
-    _tokens: WeakValueDictionary[T, "TokenizedLock[T]"] = field(
-        default_factory=WeakValueDictionary
+    _locks_by_token: WeakValueDictionary[T, "TokenizedLock[T]"] = field(
+        default_factory=WeakValueDictionary[T, "TokenizedLock[T]"],
+        init=False,
     )
 
     def __repr__(self) -> str:
-        return f"LockManager({list(self._tokens.keys())})"
+        return f"LockManager({list(self._locks_by_token.keys())})"
 
     def __len__(self) -> int:
-        return len(self._tokens)
+        return len(self._locks_by_token)
 
     def _get_lock(self, token: T) -> Optional["TokenizedLock[T]"]:
-        return self._tokens.get(token)
+        return self._locks_by_token.get(token)
 
     def register(self, token: T) -> "TokenizedLock[T]":
         """Register a TokenizedLock instance associated with a token.
@@ -43,20 +44,19 @@ class LockManager(Generic[T]):
         lock = self._get_lock(token)
         if not lock:
             lock = TokenizedLock[T](token=token, manager=self)
-            self._tokens[token] = lock
+            self._locks_by_token[token] = lock
         return lock
 
     def release_all(self, *, safe: bool = True) -> None:
         """Releases all TokenizedLock instances managed by the LockManager."""
-        for lock in list(self._tokens.values()):
+        for lock in list(self._locks_by_token.values()):
             lock.release(safe=safe)
-            self._unregister(lock.token)
 
     def _unregister(self, token: T) -> None:
         """Unregisters a TokenizedLock instance associated with a token if it's released."""
         lock = self._get_lock(token)
         if lock and lock._released:
-            self._tokens.pop(token)
+            self._locks_by_token.pop(token)
 
 
 @dataclass
